@@ -72,5 +72,5 @@ float AntiparallelDiodes::process(float a, float Z_diode) {
     float W_x = LambertW((Z_diode * Is / (eta * Vt)) * exp((Z_diode * Is + fabs(a)) / (eta * Vt)));
 
     // Return the final result based on the input `a` and computed `W_x`
-    return copysign(fabs(a) + 2 * Z_diode * Is - 2 * (eta * Vt) * W_x, a);
+    return copysign(1.0, a)*(abs(a) + 2 * Z_diode * Is - 2 * (eta * Vt) * W_x);
 }

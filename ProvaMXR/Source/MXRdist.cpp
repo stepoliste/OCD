@@ -80,7 +80,18 @@ void MXRdist::computeScatteringMatrices(float sampleRate)
     // Scattering matrix Spar2
     Spar2 = 2 * Qpar_t * (Qpar * Zpar2.inverse() * Qpar_t).inverse() * (Qpar * Zpar2.inverse()) - I;
     
-
+    Spar1 << -0.2550,  0.2550, 1.0,
+              0.7450, -0.7450, 1.0,
+              0.7450,  0.2550, 0.0;
+    
+    Spar2 << 0.0,    0.6575,  0.3425,
+             1.0,   -0.3425,  0.3425,
+             1.0,    0.6575, -0.6575;
+    
+    Sser1 << 0.0,    -1.0,  -1.0,
+    -0.0005,   -0.9995,  -5.205101832612253e-04,
+    -0.999479489816739,    -0.999479489816739, -0.000520510183261269;
+    
 }
 
 float MXRdist::process(const float input) {
@@ -92,7 +103,7 @@ float MXRdist::process(const float input) {
     a5 = b5;
     a8 = b8;
 
-    
+
     // Forward Scan
     b4 = Spar2(0, 0) * 0 + Spar2(0, 1) * a5 + Spar2(0, 2) * a6;
     b7 = Sser1(0, 0) * 0 + Sser1(0, 1) * a8 + Sser1(0, 2) * a9;
@@ -102,6 +113,7 @@ float MXRdist::process(const float input) {
 
     // Local Root Scattering
     a3 = diodes.process(b3, Z3);
+   // a3=1;
 
     // Backward Scan
     b1 = Spar1(0, 0) * a1 + Spar1(0, 1) * a2 + Spar1(0, 2) * a3;
@@ -117,6 +129,7 @@ float MXRdist::process(const float input) {
     
     // Read Output
     vout = -(a6 + b6) / 2.0f;
+ 
     
 
     return vout; // Return the first sample output, modify as needed

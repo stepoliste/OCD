@@ -30,4 +30,13 @@ private:
     ProvaMXRAudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProvaMXRAudioProcessorEditor)
+    
+    
+    juce::Slider slider;
+    juce::Label label;
+    
+
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainAttachment;
+
+    
 };

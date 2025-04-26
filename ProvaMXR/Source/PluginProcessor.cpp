@@ -178,7 +178,7 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             input_sample = inputBufferL[sample];
 
-            MXRStageOutputL = dist.process(input_sample);
+            MXRStageOutputL = dist.process(input_sample*makeupGain);
             /*
             if (!input_sample) {
                 MXRStageOutputL = 0;
@@ -193,7 +193,7 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             input_sample = inputBufferR[sample];
             
-            MXRStageOutputR = dist.process(input_sample);
+            MXRStageOutputR = dist.process(input_sample*makeupGain);
 
             /*
             if (!input_sample) {
@@ -215,6 +215,13 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             channelDataL[sample] = MXRStageOutputL;
             channelDataR[sample] = MXRStageOutputR;
+            
+            if (sample % 1000 == 0)
+                {
+                    std::cout << "Sample " << sample
+                              << ": MXRStageOutputL = " << MXRStageOutputL
+                              << ", MXRStageOutputR = " << MXRStageOutputR << std::endl;
+                }
 
         }
         
@@ -262,7 +269,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProvaMXRAudioProcessor::crea
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
-    layout.add(std::make_unique<juce::AudioParameterFloat>( juce::ParameterID { "gain", 1 },"Output Gain",juce::NormalisableRange<float> { -12.0f, 12.0f }, 0.0f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>( juce::ParameterID { "gain", 1 },"Input Gain",juce::NormalisableRange<float> { -12.0f, 12.0f }, 0.0f));
     
     return layout;
 }
