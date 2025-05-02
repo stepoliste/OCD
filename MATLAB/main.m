@@ -81,7 +81,7 @@ V_out = zeros(N, 1);
 % Load of capacitors 
 a_init_C1 = 4.5;
 a_init_C4 = 4.5;
-a_init_C6 = 4.5;
+a_init_C6 = 0;
 
 a_init_C10 = 0;
 a_init_C11 = 0;
@@ -114,6 +114,9 @@ for n = 1:N
     % b_out(6) = a_init_C11;
     
     a_out = S_out * b_out;
+
+    a_init_C10 = a_out(5);
+    a_init_C11 = a_out(7);
     
     V_out(n) = (a_out(3) + b_out(3))/2;
     % Open switch
