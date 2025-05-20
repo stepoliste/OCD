@@ -1,0 +1,37 @@
+function [Vvect, Ivect, Zs] = TransDiodeSampler(V, I)
+% Assume V and I are your full, dense vectors from Simscape
+% V = voltage vector
+% I = current vector
+
+% Step 1: Compute first and second derivatives
+dV = diff(V);
+dI = diff(I);
+slope = dI ./ dV;
+dslope = diff(slope);  % second derivative (change in slope)
+
+% Pad to align with original data
+curvature = [0; abs(dslope); 0];  % same length as V
+
+% Step 2: Normalize curvature for thresholding
+curvature = curvature / max(curvature);
+
+% Step 3: Select adaptive points
+adaptive_thresh = 0.05;  % Increase this for fewer points
+adaptive_indices = find(curvature > adaptive_thresh);
+
+% Step 4: Add uniform sampling as backup
+N_uniform = 30;  % control this to adjust total number of points
+uniform_indices = round(linspace(1, length(V), N_uniform))';
+
+% Step 5: Combine and sort indices
+all_indices = unique([adaptive_indices; uniform_indices]);
+Vvect = V(all_indices);
+Ivect = I(all_indices);
+
+Zs = ones((length(Vvect)-1), 1);
+
+for i = 2:length(Vvect)
+    Zs(i-1) = (Vvect(i) - Vvect(i-1) + 1e-9)./(Ivect(i)-Ivect(i-1)+1e-9);
+end
+
+end
