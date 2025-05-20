@@ -1,0 +1,62 @@
+
+
+#ifndef inputStage_h
+#define inputStage_h
+#endif
+
+#include "../../eigen-3.4.0/Eigen/Dense"
+#include <stdio.h>
+#include <iostream>
+
+using namespace Eigen;
+using Vector11f = Eigen::Matrix<float, 11, 1>;
+using Matrix11f = Eigen::Matrix<float, 11, 11>;
+
+
+struct wavesIN
+{
+    Vector11f a = { 0,0,0,0,0,0,0,0,0,0,0 };
+    Vector11f b = { 0,0,0,0,0,0,0,0,0,0,0 };
+};
+
+class InputStage {
+
+public:
+
+    InputStage();
+    ~InputStage() {}
+    Matrix11f prepareInputStage(float sampleRate);
+    
+    float inputStageSample(const float inputSample, Matrix11f S, wavesIN& waves, float drive);
+    void computeScatteringMatrix(int drive);
+
+private:
+    float Rin = 1e-6;
+    float R2 = 1e6;
+    float R3 = 10e3;
+    float R6 = 470e3;
+    float R5 = 2.2e3;
+    float R8 = 18e3;
+    float X2 = 1e3;
+    float R_L = 1e9;
+    float Z_C1;
+    float Z_C4;
+    float Z_C6;
+    float a_init_C1  = 4.5f;
+    float a_init_C4  = 4.5f;
+    float a_init_C6  = 0.0f;
+    float a_init_C10 = 0.0f;
+    float a_init_C11 = 0.0f;
+    float V_ref = 4.5;
+    int i= 0;
+    
+
+    Matrix<float, 5, 11> Bv;
+    Matrix<float, 5, 11> Bi;
+    Matrix<float, 11, 11> I;
+    Matrix<float, 11, 11> S_in;
+    Matrix<float, 11, 11> Z;
+    Matrix<float, 1, 11> z;
+
+};
+
