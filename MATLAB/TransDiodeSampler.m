@@ -16,11 +16,11 @@ curvature = [0 abs(dslope) 0];  % same length as V
 curvature = curvature / max(curvature);
 
 % Step 3: Select adaptive points
-adaptive_thresh = 0.25;  % Increase this for fewer points
+adaptive_thresh = 0.85;  % Increase this for fewer points
 adaptive_indices = find(curvature > adaptive_thresh);
 
 % Step 4: Add uniform sampling as backup
-N_uniform = 5;  % control this to adjust total number of points
+N_uniform = 50;  % control this to adjust total number of points
 uniform_indices = round(linspace(1, length(V), N_uniform));
 
 % Step 5: Combine and sort indices

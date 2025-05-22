@@ -106,8 +106,6 @@ B_out = [1, 0, 0, 0, 0,-1, 0;
 S_out = eye(length(Z_out)) - 2*Z_out*B_out'*((B_out*Z_out*B_out')\B_out);
 
 %% Initialization for mosfets and diode
-load("Diode_IV.mat");
-load("MOSFET_IV.mat");
 load("MOSFET_IV_characteristics.mat");
 
 % Sample I-V
@@ -132,9 +130,9 @@ bVect_d = (Vvect_d - Z_dist(3,3) * Ivect_d);
 [mu0_d, mu1_d, etaVect_d] = CPWL_param(aVect_d, bVect_d, 0);
 
 %%
-% plot(Vvect, Ivect);
+plot(Vvect, Ivect);
 % hold on
-plot(Vvect_d, Ivect_d, 'b')
+% plot(Vvect_d, Ivect_d, 'b')
 
 %% Algorithm
 
@@ -271,14 +269,8 @@ for n = 1:N
     % Open switch
     % V_out(n) = (a_out(2) + b_out(2))/2;
 end
-%% Plot
+%% Plot vs Simscape
 
-figure('Color', 'white')
-plot(t, V_out, 'Color', [0.3010 0.7450 0.9330], 'LineWidth', 2)
-xlabel('Time [s]','interpreter','latex','FontSize',18);
-ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-
-%%
 load("final_output.mat")
 figure('Color', 'white')
 plot(t, V_out, 'b','LineWidth',2,'DisplayName','WD');
@@ -288,71 +280,11 @@ xlabel('Time [s]','interpreter','latex','FontSize',18);
 ylabel('Voltage [V]','interpreter','latex','FontSize',18);
 legend('show','interpreter','latex','FontSize',13);
 
-%%
-IV_data.FET.current = out.curr.Data;
-IV_data.FET.voltage = out.volt.Data;
-IV_data.D.current = out.dcurr.Data;
-IV_data.D.voltage= out.dvolt.Data;
-
-save('MOSFET_IV_characteristics.mat', 'IV_data');
-
-% %%
-% load("first_stage.mat")
-% figure('Color', 'white')
-% plot(t, V_1, 'b','LineWidth',2,'DisplayName','WD');
-% hold on
-% plot(first_stage.Time, first_stage.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
-% xlabel('Time [s]','interpreter','latex','FontSize',18);
-% ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-% legend('show','interpreter','latex','FontSize',13);
+%% Save data from simscape simulation
 % 
-% %%
-% load("first_last_stage.mat")
-% figure('Color', 'white')
-% plot(t, V_out, 'b','LineWidth',2,'DisplayName','WD');
-% hold on
-% plot(first_last_stage.Time, first_last_stage.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
-% xlabel('Time [s]','interpreter','latex','FontSize',18);
-% ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-% legend('show','interpreter','latex','FontSize',13);
-% % 
-% % %%
-% % load("fake.mat")
-% % figure('Color', 'white')
-% % plot(t, V_out, 'b','LineWidth',2,'DisplayName','WD');
-% % hold on
-% % plot(fake.Time, fake.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
-% % xlabel('Time [s]','interpreter','latex','FontSize',18);
-% % ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-% % legend('show','interpreter','latex','FontSize',13);
+% IV_data.FET.current = out.curr.Data;
+% IV_data.FET.voltage = out.volt.Data;
+% IV_data.D.current = out.dcurr.Data;
+% IV_data.D.voltage= out.dvolt.Data;
 % 
-% %%
-% load("fake_1.mat")
-% figure('Color', 'white')
-% plot(t, V_1, 'b','LineWidth',2,'DisplayName','WD');
-% hold on
-% plot(fake_1.Time, fake_1.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
-% xlabel('Time [s]','interpreter','latex','FontSize',18);
-% ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-% legend('show','interpreter','latex','FontSize',13);
-% 
-% 
-% %%
-% load("fake_2.mat")
-% figure('Color', 'white')
-% plot(t, V_2, 'b','LineWidth',2,'DisplayName','WD');
-% hold on
-% plot(fake_2.Time, fake_2.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
-% xlabel('Time [s]','interpreter','latex','FontSize',18);
-% ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-% legend('show','interpreter','latex','FontSize',13);
-% 
-% %%
-% load("fake_3.mat")
-% figure('Color', 'white')
-% plot(t, V_out, 'b','LineWidth',2,'DisplayName','WD');
-% hold on
-% plot(fake_3.Time, fake_3.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
-% xlabel('Time [s]','interpreter','latex','FontSize',18);
-% ylabel('Voltage [V]','interpreter','latex','FontSize',18);
-% legend('show','interpreter','latex','FontSize',13);
+% save('MOSFET_IV_characteristics.mat', 'IV_data');
