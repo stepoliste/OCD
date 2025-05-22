@@ -10,28 +10,28 @@ slope = dI ./ dV;
 dslope = diff(slope);  % second derivative (change in slope)
 
 % Pad to align with original data
-curvature = [0; abs(dslope); 0];  % same length as V
+curvature = [0 abs(dslope) 0];  % same length as V
 
 % Step 2: Normalize curvature for thresholding
 curvature = curvature / max(curvature);
 
 % Step 3: Select adaptive points
-adaptive_thresh = 0.05;  % Increase this for fewer points
+adaptive_thresh = 0.25;  % Increase this for fewer points
 adaptive_indices = find(curvature > adaptive_thresh);
 
 % Step 4: Add uniform sampling as backup
-N_uniform = 30;  % control this to adjust total number of points
-uniform_indices = round(linspace(1, length(V), N_uniform))';
+N_uniform = 5;  % control this to adjust total number of points
+uniform_indices = round(linspace(1, length(V), N_uniform));
 
 % Step 5: Combine and sort indices
-all_indices = unique([adaptive_indices; uniform_indices]);
+all_indices = unique([adaptive_indices uniform_indices]);
 Vvect = V(all_indices);
 Ivect = I(all_indices);
 
 Zs = ones((length(Vvect)-1), 1);
 
 for i = 2:length(Vvect)
-    Zs(i-1) = (Vvect(i) - Vvect(i-1) + 1e-9)./(Ivect(i)-Ivect(i-1)+1e-9);
+    Zs(i-1) = ((Vvect(i) - Vvect(i-1) + 1e-12)./(Ivect(i)-Ivect(i-1) +1e-12)) + 1e-12;
 end
 
 end

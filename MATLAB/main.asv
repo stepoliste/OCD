@@ -281,9 +281,9 @@ ylabel('Voltage [V]','interpreter','latex','FontSize',18);
 %%
 load("final_output.mat")
 figure('Color', 'white')
-plot(t, V_out, 'b','LineWidth',2,'DisplayName','WD');
+plot(t, V_1, 'b','LineWidth',2,'DisplayName','WD');
 hold on
-plot(final_output.Time, final_output.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
+plot(first_stage.Time, first_stage.Data, 'r--', 'LineWidth', 2, 'DisplayName','Simscape')
 xlabel('Time [s]','interpreter','latex','FontSize',18);
 ylabel('Voltage [V]','interpreter','latex','FontSize',18);
 legend('show','interpreter','latex','FontSize',13);
