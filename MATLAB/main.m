@@ -130,9 +130,9 @@ bVect_d = (Vvect_d - Z_dist(3,3) * Ivect_d);
 [mu0_d, mu1_d, etaVect_d] = CPWL_param(aVect_d, bVect_d, 0);
 
 %%
-% plot(Vvect, Ivect);
-% hold on
-% plot(IV_data.FET.voltage, IV_data.FET.current, 'b--')
+plot(Vvect, Ivect);
+hold on
+plot(IV_data.FET.voltage, IV_data.FET.current, 'b--')
 
 %% Algorithm
 
@@ -166,7 +166,7 @@ a_init_C10 = 0; %3.66;
 a_init_C11 = 0;%-3.3e-4;
 
 v_old_iter = 0;
-eSIM = 1e-3;
+eSIM = 1e-6;
 
 for n = 1:N
     
@@ -280,6 +280,8 @@ xlabel('Time [s]','interpreter','latex','FontSize',18);
 ylabel('Voltage [V]','interpreter','latex','FontSize',18);
 legend('show','interpreter','latex','FontSize',13);
 
+%%
+plot(t, V_1)
 %% Save data from simscape simulation
 
 % IV_data.FET.current = out.curr.Data;

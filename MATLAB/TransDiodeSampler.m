@@ -16,7 +16,7 @@ curvature = [0 abs(dslope) 0];  % same length as V
 curvature = curvature / max(curvature);
 
 % Step 3: Select adaptive points
-adaptive_thresh = 0.85;  % Increase this for fewer points
+adaptive_thresh = 0.95;  % Increase this for fewer points
 adaptive_indices = find(curvature > adaptive_thresh);
 
 % Step 4: Add uniform sampling as backup

@@ -43,6 +43,7 @@ Bi = [1, 0, 0, 0, 0, 0,-1, 0, 0, 0, 0;
 
 S_in = eye(11) - 2*Z_in*Bi'*((Bv*Z_in*Bi')\Bv);
 
+
 %% Distortion Stage
 
 R9 = 10e3; 
@@ -58,7 +59,7 @@ load("NL_syms_value.mat");
 
 NL = NL_adapt;
 
-Z_dist = diag([Rin, NL_adapt, R12, Z_C8, Z_C9, R_L, Z_C7, R10, R9, R11, R13]);
+Z_dist = diag([Rin, NL, R12, Z_C8, Z_C9, R_L, Z_C7, R10, R9, R11, R13]);
 
 Fv = [1, 0,-1, 0, 0;
      -1, 0, 0, 0, 0;
