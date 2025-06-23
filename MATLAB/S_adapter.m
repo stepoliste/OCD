@@ -60,14 +60,14 @@ syms NL;
 Z_dist = diag([Rin, NL, R12, Z_C8, Z_C9, R_L, Z_C7, R10, R9, R11, R13]);
 
 Fv = [1, 0,-1, 0, 0;
-     -1, 0, 0, 0, 0;
+      1, 0, 0, 0, 0;
      -1,-1, 0, 0, 0;
       0,-1,-1, 1, 0;
       0, 0, 0, 0,-1;
       0,-1,-1, 0, 1];
 
 Fi = [1, 0,-1, 0, 0;
-     -1, 0, 0, 0, 0;
+      1, 0, 0, 0, 0;
      -1,-1, 0, 0, 0;
       0, 0, 0, 1,-1;
       0, 0, 0, 0,-1;
@@ -80,10 +80,6 @@ S_dist = eye(length(Z_dist)) - 2*Z_dist*Bi_dist'*((Bv_dist*Z_dist*Bi_dist')\Bv_d
 
 NL_adapt = solve(S_dist(2,2)==0, NL);
 NL_adapt = double(NL_adapt);
-
-%%
-Z_dist = diag([Rin, NL_adapt, R12, Z_C8, Z_C9, R_L, Z_C7, R10, R9, R11, R13]);
-S_dist = eye(length(Z_dist)) - 2*Z_dist*Bi_dist'*((Bv_dist*Z_dist*Bi_dist')\Bv_dist);
 
 %% 
 save("NL_syms_value", "NL_adapt");

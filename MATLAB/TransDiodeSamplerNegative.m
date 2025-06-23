@@ -80,7 +80,7 @@ curvature = [0; abs(dslope); 0];  % Pad to match original length
 curvature = curvature / max(curvature + eps);
 
 % Choose threshold and find high-curvature indices
-adaptive_threshold = 0.1;  % Adjust this as needed
+adaptive_threshold = 0.001;  % Adjust this as needed
 adaptive_indices = find(curvature > adaptive_threshold);
 
 % Always include endpoints
