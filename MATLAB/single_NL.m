@@ -142,6 +142,7 @@ a_init_C9 = 0;
 a_init_C10 = 0;
 a_init_C11 = 0;
 
+tic;
 for n = 1:N
     
     % Input stage
@@ -200,7 +201,7 @@ for n = 1:N
     V_out(n) = (a_out(3) + b_out(3))/2;
     
 end
-
+toc_sim = toc;
 %% Plot vs Simscape
 
 load("final_output.mat")
@@ -212,9 +213,47 @@ xlabel('Time [s]','interpreter','latex','FontSize',18);
 ylabel('Voltage [V]','interpreter','latex','FontSize',18);
 legend('show','interpreter','latex','FontSize',13);
 
+%% Performance Metrics
+
+% Simscape signal
+Vsim = interp1(final_output.Time, final_output.Data, t, 'linear', 'extrap');
+Vsim = Vsim';
+
+% RMS values
+rms_WDF = sqrt(mean(V_out.^2));
+rms_Simscape = sqrt(mean(Vsim.^2));
+rms_error = sqrt(mean((V_out - Vsim).^2));
+
+% SNR
+signal_power = mean(V_out.^2);
+error_power = mean((Vsim - V_out).^2);
+SNR_dB = 10 * log10(signal_power / error_power);
+
+% Peak error and correlation
+peak_error = max(abs(V_out - Vsim));
+% corr_val = corr(V_out, Vsim);
+% Manual Pearson correlation coefficient
+corr_val = sum((V_out - mean(V_out)) .* (Vsim - mean(Vsim))) / ...
+           (sqrt(sum((V_out - mean(V_out)).^2)) * sqrt(sum((Vsim - mean(Vsim)).^2)));
+
+
+% Real-time performance
+real_time_ratio = StopTime / toc_sim;
+
+% Display
+fprintf('\n--- Performance Metrics ---\n');
+fprintf('RMS(WDF): %.4f V\n', rms_WDF);
+fprintf('RMS(Simscape): %.4f V\n', rms_Simscape);
+fprintf('RMS Error: %.4f V\n', rms_error);
+fprintf('Peak Error: %.4f V\n', peak_error);
+fprintf('Correlation: %.4f\n', corr_val);
+fprintf('SNR: %.2f dB\n', SNR_dB);
+fprintf('Elapsed Time: %.4f s for %.4f s audio\n', toc_sim, StopTime);
+fprintf('Real-Time Ratio: %.2f x\n', real_time_ratio);
+
 %% Save data from simscape simulation
 
-IV_comb.current = out.curr_comb.Data;
-IV_comb.voltage = out.volt_comb.Data;
-
-save('COMBINED_IV_characteristics.mat', 'IV_comb');
+% IV_comb.current = out.curr_comb.Data;
+% IV_comb.voltage = out.volt_comb.Data;
+% 
+% save('COMBINED_IV_characteristics.mat', 'IV_comb');
