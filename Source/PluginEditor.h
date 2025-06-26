@@ -64,16 +64,16 @@ private:
     const int knobWidth = 70;
     const int knobHeight = 65;
 
-    const int ledY = 70;
-    const int ledWidth = 36;
-    const int ledHeight = 35;
+    const int ledY = 120;
+    const int ledWidth = 30;
+    const int ledHeight = 28;
 
-    const int switchY = 302;
-    const int switchWidth = 100;
-    const int switchHeight = 98;
+    const int switchY = 300;
+    const int switchWidth = 80;
+    const int switchHeight = 70;
     
-    const int switchHpLpWidth = 40;
-    const int switchHpLpHeight = 40;
+    const int switchHpLpWidth = 30;
+    const int switchHpLpHeight = 30;
 
     ProvaMXRAudioProcessor& audioProcessor;
 

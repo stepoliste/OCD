@@ -22,14 +22,14 @@ struct wavesOUT
     Matrix<float, 6, 1> b = {0,0,0,0,0,0};
 };
 
-typedef Matrix<float,6,6> Matrix7f;
+typedef Matrix<float,6,6> Matrix6f;
 
 class OutputStage {
 public:
     OutputStage();
     ~OutputStage() {};
     Matrix<float, 6, 6> prepareOutputStage(float sampleRate);
-    float outputStageSample(float inputWet, Matrix7f S_out, wavesOUT& waves, int R, float tone, float volume);
+    float outputStageSample(float inputWet, Matrix6f S_out, wavesOUT& waves, int R, float tone, float volume);
     void computeScatteringMatrix(bool R, int tone, int volume);
 
 private:
@@ -39,7 +39,7 @@ private:
     float Z_C11;
     float Rin = 1e-6;
     float R14 = 22e3f;
-    float R15 = 33e3f;
+    float R15 = 13200;//33e3f;
     float X4  = 10e3f;
     float X5  = 500e3f;
     int i=0;
@@ -49,7 +49,7 @@ private:
     
     Matrix<float, 2, 6> B_out;
     Matrix<float, 6, 6> Z_out;
-    Matrix7f I=Matrix7f::Identity(6,6);
+    Matrix6f I=Matrix6f::Identity(6,6);
     
-    Matrix7f S_out;
+    Matrix6f S_out;
 };

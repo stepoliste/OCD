@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="XIYqYB" name="Sfaser25" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="XIYqYB" name="OCD" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="MCS">
-  <MAINGROUP id="rtYDuW" name="Sfaser25">
+              companyName="ACS">
+  <MAINGROUP id="rtYDuW" name="OCD">
     <GROUP id="{62A10761-4B4D-06E8-617E-2410959EE530}" name="Source">
       <GROUP id="{DFA0EA5C-0F7A-6675-B0C4-487859F5AD16}" name="GUI">
         <GROUP id="{126EC93D-DB55-3F9F-19BB-E9C9AEAC3EAC}" name="Assets">
@@ -16,6 +16,8 @@
               file="Source/GUI/Sfaser25LookAndFeel.h"/>
       </GROUP>
       <GROUP id="{B539DBDF-BEF6-EDA7-9C76-3D1A33C80FA1}" name="Stages">
+        <FILE id="mUtCXv" name="DistStage.cpp" compile="1" resource="0" file="Source/Stages/DistStage.cpp"/>
+        <FILE id="rwJdIL" name="DistStage.h" compile="0" resource="0" file="Source/Stages/DistStage.h"/>
         <FILE id="uqawOO" name="InputStage.cpp" compile="1" resource="0" file="Source/Stages/InputStage.cpp"/>
         <FILE id="eC0GzK" name="InputStage.h" compile="0" resource="0" file="Source/Stages/InputStage.h"/>
         <FILE id="wm176h" name="OutputStage.cpp" compile="1" resource="0" file="Source/Stages/OutputStage.cpp"/>

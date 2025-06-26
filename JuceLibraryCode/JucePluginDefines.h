@@ -41,16 +41,16 @@
  #define JucePlugin_Enable_ARA             0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "Sfaser25"
+ #define JucePlugin_Name                   "OCD"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "Sfaser25"
+ #define JucePlugin_Desc                   "OCD"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "MCS"
+ #define JucePlugin_Manufacturer           "ACS"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
- #define JucePlugin_ManufacturerWebsite    "www.MCS.com"
+ #define JucePlugin_ManufacturerWebsite    "www.ACS.com"
 #endif
 #ifndef  JucePlugin_ManufacturerEmail
  #define JucePlugin_ManufacturerEmail      ""
@@ -101,19 +101,19 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         Sfaser25AU
+ #define JucePlugin_AUExportPrefix         OCDAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "Sfaser25AU"
+ #define JucePlugin_AUExportPrefixQuoted   "OCDAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.MCS.Sfaser25
+ #define JucePlugin_CFBundleIdentifier     com.ACS.OCD
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.MCS.Sfaser25
+ #define JucePlugin_AAXIdentifier          com.ACS.OCD
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -137,7 +137,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "MCS: Sfaser25"
+ #define JucePlugin_IAAName                "ACS: OCD"
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16
@@ -152,10 +152,10 @@
  #define JucePlugin_ARATransformationFlags  0
 #endif
 #ifndef  JucePlugin_ARAFactoryID
- #define JucePlugin_ARAFactoryID           "com.MCS.Sfaser25.factory"
+ #define JucePlugin_ARAFactoryID           "com.ACS.OCD.factory"
 #endif
 #ifndef  JucePlugin_ARADocumentArchiveID
- #define JucePlugin_ARADocumentArchiveID   "com.MCS.Sfaser25.aradocumentarchive.1.0.0"
+ #define JucePlugin_ARADocumentArchiveID   "com.ACS.OCD.aradocumentarchive.1.0.0"
 #endif
 #ifndef  JucePlugin_ARACompatibleArchiveIDs
  #define JucePlugin_ARACompatibleArchiveIDs  ""

@@ -21,25 +21,25 @@ namespace BinaryData
     const int            volknob_strip_pngSize = 917856;
 
     extern const char*   HpLpswitchdown_png;
-    const int            HpLpswitchdown_pngSize = 8204;
+    const int            HpLpswitchdown_pngSize = 1765;
 
     extern const char*   HpLpswitchup_png;
-    const int            HpLpswitchup_pngSize = 8223;
+    const int            HpLpswitchup_pngSize = 1725;
 
     extern const char*   onoffledoff_png;
-    const int            onoffledoff_pngSize = 11647;
+    const int            onoffledoff_pngSize = 1890;
 
     extern const char*   onoffledon_png;
-    const int            onoffledon_pngSize = 9146;
+    const int            onoffledon_pngSize = 1921;
 
     extern const char*   onoffswitchdown_png;
-    const int            onoffswitchdown_pngSize = 32206;
+    const int            onoffswitchdown_pngSize = 9097;
 
     extern const char*   pedal_full_res_2k_cropped_scaled_png;
     const int            pedal_full_res_2k_cropped_scaled_pngSize = 41642;
 
     extern const char*   onoffswitchup_png;
-    const int            onoffswitchup_pngSize = 32904;
+    const int            onoffswitchup_pngSize = 9094;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 11;

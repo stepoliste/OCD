@@ -19,7 +19,7 @@ ProvaMXRAudioProcessor::ProvaMXRAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), apvts(*this, nullptr, "Parameters", createParameterLayout()), inputStage(), outputStage()
+                       ), apvts(*this, nullptr, "Parameters", createParameterLayout()), inputStage(), outputStage(), distStage()
 #endif
 {
     
@@ -100,7 +100,7 @@ void ProvaMXRAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     //Compute S for each stage
 
     S_in = inputStage.prepareInputStage(sample_rate);
-    //shiftStage.prepareShiftStage(sample_rate);
+    distStage.prepareDistStage(sample_rate);
     S_out = outputStage.prepareOutputStage(sample_rate);
 
 
@@ -203,13 +203,11 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 
                 else {
                     inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN, drive);
-                    /*
-                     shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1L, lfoValue);
-                     shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2L, lfoValue);
-                     shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3L, lfoValue);
-                     shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
-                     */
-                    outputL = (outputStage.outputStageSample( inputStageOutput, S_out, initOUT,HpLpState,tone,volume));
+                   // distStageOutput = distStage.DistStageSample(inputStageOutput, initDIST);
+                    //outputL = (outputStage.outputStageSample( distStageOutput, S_out, initOUT,HpLpState,tone,volume));
+
+                    outputL = outputStage.outputStageSample( inputStageOutput, S_out, initOUT,HpLpState,tone,volume);
+                    //outputL= inputStageOutput;
                     
                 }
                 
@@ -217,6 +215,7 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 drySampleR = inputBufferR[sample];
                 
                 input_sample = inputBufferR[sample];
+                //DBG("inpsample = " << input_sample);
                 
                 if (!input_sample) {
                     outputR = 0;
@@ -224,15 +223,14 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 else {
                     
                     inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN, drive);
-                    /*
-                     shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1R, lfoValue);
-                     shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2R, lfoValue);
-                     shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3R, lfoValue);
-                     shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4R, lfoValue);
-                     */
-                    //outputR = (outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4);
-                    outputR = (outputStage.outputStageSample( inputStageOutput, S_out, initOUT,HpLpState,tone,volume));
-                   // DBG("outputsample = " << outputR);
+                    //distStageOutput=distStage.DistStageSample(inputStageOutput, initDIST);
+                   // outputR = (outputStage.outputStageSample( distStageOutput, S_out, initOUT,HpLpState,tone,volume));                    
+                    
+                    
+                    //outputR= inputStageOutput;
+                    outputR = outputStage.outputStageSample( inputStageOutput, S_out, initOUT,HpLpState,tone,volume);
+                    
+                    //DBG("outputsample = " << outputR);
                 }
                 wetSampleL = outputL * wet;
                 wetSampleR = outputR * wet;

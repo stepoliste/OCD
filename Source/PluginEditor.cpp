@@ -133,7 +133,7 @@ void ProvaMXRAudioProcessorEditor::paint(juce::Graphics& g)
 
 void ProvaMXRAudioProcessorEditor::resized()
 {
-    HpLpSwitch.setBounds(windowWidth/2 - switchHpLpWidth / 2 , 25, switchHpLpWidth, switchHpLpHeight);
+    HpLpSwitch.setBounds(windowWidth/2 - switchHpLpWidth / 2 , 90, switchHpLpWidth, switchHpLpHeight);
     onOffSwitch.setBounds(windowWidth / 2 - switchWidth / 2, switchY, switchWidth, switchHeight);
     ledOnOff.setBounds(windowWidth / 2 - ledWidth / 2, ledY, ledWidth, ledHeight);
     toneKnob.setBounds(windowWidth / 2 - knobWidth / 2, 155, knobWidth, knobHeight);

@@ -57,6 +57,7 @@
 		ACC381EEA6D25A9D1E0A3D22 /* include_juce_audio_processors.mm */ = {isa = PBXBuildFile; fileRef = CBC66539EE7E027533F5953D; };
 		ADE6311B1C19DC3890D6C754 /* InputStage.cpp */ = {isa = PBXBuildFile; fileRef = A7DED2C58A459A3F4D6B24C2; };
 		B398BF91C9B3E5467453798C /* include_juce_audio_plugin_client_AU_1.mm */ = {isa = PBXBuildFile; fileRef = 420C1578740991DDAB98D35B; };
+		B5250F02DF4869D1D0BA3552 /* DistStage.cpp */ = {isa = PBXBuildFile; fileRef = 0C7C2BF81920B9231107FE99; };
 		B7ADFF98892FB7996289793B /* include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = 47CA606855D11A69561BB6B1; };
 		B7EAD73644A25982E51C9710 /* OutputStage.cpp */ = {isa = PBXBuildFile; fileRef = BCB881DD0A6BA284E6D3B583; };
 		B8624C7200F81C27BAC61040 /* include_juce_dsp.mm */ = {isa = PBXBuildFile; fileRef = 64EEAE86AA0714472523196D; };
@@ -81,7 +82,9 @@
 		06BF323CEDED4C2748A5CF7F /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		0872FA9B750102CE59D07170 /* OutputStage.h */ /* OutputStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OutputStage.h; path = ../../Source/Stages/OutputStage.h; sourceTree = SOURCE_ROOT; };
 		091F1FA968A2076FBE92FF6B /* include_juce_audio_plugin_client_Standalone.cpp */ /* include_juce_audio_plugin_client_Standalone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_plugin_client_Standalone.cpp; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp; sourceTree = SOURCE_ROOT; };
+		0C7C2BF81920B9231107FE99 /* DistStage.cpp */ /* DistStage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DistStage.cpp; path = ../../Source/Stages/DistStage.cpp; sourceTree = SOURCE_ROOT; };
 		155B6517EF387FF6501447B1 /* QuartzCore.framework */ /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1BB0A8BE726A45E4B267FA5A /* DistStage.h */ /* DistStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DistStage.h; path = ../../Source/Stages/DistStage.h; sourceTree = SOURCE_ROOT; };
 		1D27B231310AF97583EC9D15 /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
 		20FA57DBA26A5AC8E829080F /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
 		22C6AF265AA9DA3CCCFFFFE2 /* IOKit.framework */ /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -434,6 +437,8 @@
 		E450A006D0BD566B55FE35D3 /* Stages */ = {
 			isa = PBXGroup;
 			children = (
+				0C7C2BF81920B9231107FE99,
+				1BB0A8BE726A45E4B267FA5A,
 				A7DED2C58A459A3F4D6B24C2,
 				5CF73F0AA9253B82061DCAAB,
 				BCB881DD0A6BA284E6D3B583,
@@ -793,6 +798,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4A35849653A92BFC2E20E2D,
+				B5250F02DF4869D1D0BA3552,
 				ADE6311B1C19DC3890D6C754,
 				B7EAD73644A25982E51C9710,
 				48C1BEC2AE7F05DBAE140858,

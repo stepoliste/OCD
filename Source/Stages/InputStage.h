@@ -4,7 +4,7 @@
 #define inputStage_h
 #endif
 
-#include "../../eigen-3.4.0/Eigen/Dense"
+#include "../eigen-3.4.0/Eigen/Dense"
 #include <stdio.h>
 #include <iostream>
 
@@ -37,26 +37,23 @@ private:
     float R6 = 470e3;
     float R5 = 2.2e3;
     float R8 = 18e3;
-    float X2 = 1e3;
-    float R_L = 1e9;
-    float Z_C1;
-    float Z_C4;
-    float Z_C6;
-    float a_init_C1  = 4.5f;
-    float a_init_C4  = 4.5f;
+    float X2 = 500e3;//1e6; 
+    int drive= 1e6;
+    float R_L = 1e6;
+
+    float a_init_C1  = 0.0f;
+    float a_init_C4  = 0.0f;
     float a_init_C6  = 0.0f;
     float a_init_C10 = 0.0f;
     float a_init_C11 = 0.0f;
     float V_ref = 4.5;
     int i= 0;
+    float Z_C1 = 0.0f;
+    float Z_C4 = 0.0f;
+    float Z_C6 = 0.0f;
     
-
-    Matrix<float, 5, 11> Bv;
-    Matrix<float, 5, 11> Bi;
-    Matrix<float, 11, 11> I;
     Matrix<float, 11, 11> S_in;
-    Matrix<float, 11, 11> Z;
-    Matrix<float, 1, 11> z;
+    
 
 };
 
