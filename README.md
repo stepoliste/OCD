@@ -10,7 +10,7 @@ The plugin emulates the nonlinear behavior of the reference analog circuit using
 
 ## GUI Preview
 
-![GUI Preview](path/to/your/image.png)
+![GUI Preview](https://github.com/stepoliste/OCD/blob/JUCE/gui_screen.png)
 
 ## Compilation Instructions
 
