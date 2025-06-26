@@ -6,7 +6,7 @@ This branch contains the implementation of a real-time VST plugin that integrate
 
 The plugin emulates the nonlinear behavior of the reference analog circuit using the precomputed WD structure. It supports real-time audio input/output and parameter control.
 
-> ⚠️ The plugin is still under refinement. Performance tuning, UI improvements, and testing on different DAWs are ongoing.
+> ⚠️ The plugin is still under refinement. Performance tuning and testing on different DAWs are ongoing.
 
 ## GUI Preview
 
