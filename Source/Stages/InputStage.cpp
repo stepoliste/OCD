@@ -15,8 +15,8 @@ InputStage::InputStage()
     S_in.fill(0);
 }
 
-Matrix11f InputStage::prepareInputStage(float sampleRate)
-{      
+void InputStage::prepareInputStage(float sampleRate)
+{
     float Ts = 1.0f / sampleRate;
     
     Z_C1 = Ts / (2.0f * 22e-9f);
@@ -25,14 +25,24 @@ Matrix11f InputStage::prepareInputStage(float sampleRate)
         
     // Initialize the scattering matrix S_in
     computeScatteringMatrix(drive);
-    
-    return S_in;
-    
+
     
 }
 
-float InputStage::inputStageSample(const float inputSample, Matrix11f S_in, wavesIN& waves, float drive)
+float InputStage::inputStageSample(const float inputSample, float drive)
 {
+    // Convert drive to int as required by computeScatteringMatrix
+    int driveInt = static_cast<int>(drive);
+    
+    // Check if drive parameter has changed, and only recompute if necessary
+    if (driveInt != lastDrive)
+    {
+        computeScatteringMatrix(driveInt);
+        
+        // Update last drive value
+        lastDrive = driveInt;
+    }
+    
     // Input stage
     waves.b(0) = inputSample;           // Vin(n) --> waves.b(0)
     waves.b(3) = a_init_C4;
@@ -129,7 +139,7 @@ void InputStage::computeScatteringMatrix(int X2){
     S_in(3, 10) = 0.0f;
     
     // Row 4 (Complex term dependent on X2, Z_C4, Z_C6)
-    float complex_term = 2200.0f * X2 + 18000.0f * Z_C4 + 20200.0f * Z_C6 + 
+    float complex_term = 2200.0f * X2 + 18000.0f * Z_C4 + 20200.0f * Z_C6 +
                         X2 * Z_C4 + X2 * Z_C6 + Z_C4 * Z_C6 + 39600000.0f;
     
     S_in(4, 0) = (term_940M * complex_term) / denom_full;

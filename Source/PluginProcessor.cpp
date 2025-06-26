@@ -99,9 +99,9 @@ void ProvaMXRAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     
     //Compute S for each stage
 
-    S_in = inputStage.prepareInputStage(sample_rate);
+    inputStage.prepareInputStage(sample_rate);
     distStage.prepareDistStage(sample_rate);
-    S_out = outputStage.prepareOutputStage(sample_rate);
+    outputStage.prepareOutputStage(sample_rate);
 
 
 
@@ -138,6 +138,8 @@ bool ProvaMXRAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
   #endif
 }
 #endif
+
+
 
 void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
@@ -202,11 +204,11 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 }
                 
                 else {
-                    inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN, drive);
-                   // distStageOutput = distStage.DistStageSample(inputStageOutput, initDIST);
-                    //outputL = (outputStage.outputStageSample( distStageOutput, S_out, initOUT,HpLpState,tone,volume));
+                    inputStageOutput = inputStage.inputStageSample(input_sample, drive);
+                    distStageOutput = distStage.DistStageSample(inputStageOutput);
+                    outputL = (outputStage.outputStageSample( distStageOutput, HpLpState,tone,volume));
 
-                    outputL = outputStage.outputStageSample( inputStageOutput, S_out, initOUT,HpLpState,tone,volume);
+                    //outputL = outputStage.outputStageSample( inputStageOutput, HpLpState,tone,volume);
                     //outputL= inputStageOutput;
                     
                 }
@@ -222,13 +224,13 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 }
                 else {
                     
-                    inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN, drive);
-                    //distStageOutput=distStage.DistStageSample(inputStageOutput, initDIST);
-                   // outputR = (outputStage.outputStageSample( distStageOutput, S_out, initOUT,HpLpState,tone,volume));                    
+                    inputStageOutput = inputStage.inputStageSample(input_sample,  drive);
+                    distStageOutput=distStage.DistStageSample(inputStageOutput);
+                    outputR = (outputStage.outputStageSample( distStageOutput, HpLpState,tone,volume));
                     
                     
                     //outputR= inputStageOutput;
-                    outputR = outputStage.outputStageSample( inputStageOutput, S_out, initOUT,HpLpState,tone,volume);
+                    //outputR = outputStage.outputStageSample( inputStageOutput,HpLpState,tone,volume);
                     
                     //DBG("outputsample = " << outputR);
                 }

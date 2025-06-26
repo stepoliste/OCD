@@ -82,12 +82,8 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProvaMXRAudioProcessor)
     float inputStageOutput = 0;
     float distStageOutput=0;
-    /*
-    float shiftStageOutput1 = 0;
-    float shiftStageOutput2 = 0;
-    float shiftStageOutput3 = 0;
-    float shiftStageOutput4 = 0;
-     */
+
+    
     float outputL = 0;
     float outputR = 0;
     int rounded;
@@ -110,22 +106,12 @@ private:
 
     // input stage
     InputStage inputStage;
-    wavesIN initIN;
-    Matrix11f S_in;
 
-    // shifting stage
-    /*
-    ShiftStage shiftStage;
-    wavesSTAGE initSTAGE1L, initSTAGE2L, initSTAGE3L, initSTAGE4L, initSTAGE1R, initSTAGE2R, initSTAGE3R, initSTAGE4R;
-    Matrix8d S_stage;
-     */
-    wavesDIST initDIST;
+
     DistStage distStage;
 
     // output stage
     OutputStage outputStage;
-    wavesOUT initOUT;
-    Matrix6f S_out;
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;

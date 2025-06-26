@@ -1,10 +1,8 @@
-
-
 #ifndef inputStage_h
 #define inputStage_h
 #endif
 
-#include "../eigen-3.4.0/Eigen/Dense"
+#include "../../eigen-3.4.0/Eigen/Dense"
 #include <stdio.h>
 #include <iostream>
 
@@ -13,31 +11,37 @@ using Vector11f = Eigen::Matrix<float, 11, 1>;
 using Matrix11f = Eigen::Matrix<float, 11, 11>;
 
 
-struct wavesIN
-{
-    Vector11f a = { 0,0,0,0,0,0,0,0,0,0,0 };
-    Vector11f b = { 0,0,0,0,0,0,0,0,0,0,0 };
-};
-
 class InputStage {
 
 public:
 
     InputStage();
     ~InputStage() {}
-    Matrix11f prepareInputStage(float sampleRate);
+    void prepareInputStage(float sampleRate);
     
-    float inputStageSample(const float inputSample, Matrix11f S, wavesIN& waves, float drive);
+    float inputStageSample(const float inputSample,  float drive);
     void computeScatteringMatrix(int drive);
 
 private:
+
+    struct wavesIN {
+        Vector11f a;
+        Vector11f b;
+
+        wavesIN() {
+            a.setZero();
+            b.setZero();
+        }
+    };
+    wavesIN waves;
+
     float Rin = 1e-6;
     float R2 = 1e6;
     float R3 = 10e3;
     float R6 = 470e3;
     float R5 = 2.2e3;
     float R8 = 18e3;
-    float X2 = 500e3;//1e6; 
+    float X2 = 500e3;//1e6;
     int drive= 1e6;
     float R_L = 1e6;
 
@@ -52,8 +56,9 @@ private:
     float Z_C4 = 0.0f;
     float Z_C6 = 0.0f;
     
-    Matrix<float, 11, 11> S_in;
+    // Track last drive value to avoid unnecessary recalculation
+    int lastDrive = -1;
     
-
+    Matrix<float, 11, 11> S_in;
 };
 

@@ -18,17 +18,6 @@ using Vector11f = Eigen::Matrix<float, 11, 1>;
 using Matrix11f = Eigen::Matrix<float, 11, 11>;
 
 
-struct wavesDIST
-{
-    Vector11f a;
-    Vector11f b;
-
-    wavesDIST()
-    {
-        a.setZero();
-        b.setZero();
-    }
-};
 
 
 class DistStage {
@@ -38,11 +27,20 @@ public:
     DistStage();
     ~DistStage() {}
     void prepareDistStage(float sampleRate);
-    
-    float DistStageSample(const float DistSample, wavesDIST& waves);
+    float DistStageSample(const float DistSample);
    
 
 private:
+    struct wavesDist {
+        Vector11f a;
+        Vector11f b;
+
+        wavesDist() {
+            a.setZero();
+            b.setZero();
+        }
+    };
+    wavesDist waves;
     float R9 = 10e3;
     float R10 = 10e3;
     float R12 = 220e3;
@@ -68,7 +66,7 @@ private:
     // CPWL helper functions
     // For 1xN static row vectors:
     std::pair<float, int> CPWL_function(float a, const Eigen::Matrix<float, 1, 42>& aVect,
-                                              float mu0, float mu1, const Eigen::Matrix<float, 1, 42>& etaVect);
+                                   float mu0, float mu1, const Eigen::Matrix<float, 1, 42>& etaVect);
 
     //Eigen::VectorXf Vvect, Ivect, Vvect_d, Ivect_d;
     //Eigen::VectorXf Z_mos, Z_d;

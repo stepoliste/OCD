@@ -2,8 +2,8 @@
   ==============================================================================
 
     outputStage.cpp
-    Created: 1 May 2023 2:37:54pm
-    Author:  Samuele Del Moro
+    Created: 1 May 2025 2:37:54pm
+    Author:  Stefano Polimeno
 
   ==============================================================================
 */
@@ -20,7 +20,7 @@ OutputStage::OutputStage()
     S_out.fill(0);
 }
 
-Matrix<float, 6, 6> OutputStage::prepareOutputStage(float sampleRate)
+void OutputStage::prepareOutputStage(float sampleRate)
 {
     
     Ts = 1/sampleRate;
@@ -28,50 +28,31 @@ Matrix<float, 6, 6> OutputStage::prepareOutputStage(float sampleRate)
     Z_C11 = Ts / (2 * 47e-9f);
     
 
-    /*
-    Z_out <<  X4, 0, 0, 0, 0, 0,
-              0, X5, 0, 0, 0, 0,
-              0, 0, Rin, 0, 0, 0,
-              0, 0, 0, Z_C10, 0, 0,
-              0, 0, 0, 0, R15, 0,
-              0, 0, 0, 0, 0, Z_C11;
-    
-    
-    //scattering matrix computation
-    S_out = I - 2 * Z_out * B_out.transpose() * ((B_out * Z_out * B_out.transpose()).inverse() * B_out);
-     
-     */
+
     int R=true;
     computeScatteringMatrix(R, X4, X5);
     
-    
-    
-    return S_out;
-    
+
 }
 
-float OutputStage::outputStageSample(float inputWet, Matrix6f S_out, wavesOUT& waves, int R, float tone, float volume)
+float OutputStage::outputStageSample(float inputWet, int R, float tone, float volume)
 {
-    
+    // Check if any parameter has changed, and only recompute if necessary
+    if (R != lastR || tone != lastTone || volume != lastVolume)
+    {
+        computeScatteringMatrix(R, tone, volume);
+        
+        // Update last parameter values
+        lastR = R;
+        lastTone = tone;
+        lastVolume = volume;
+    }
     
     waves.b(2) = inputWet;      // Index 4 in MATLAB is 3 in C++ (0-indexed)
     waves.b(3) = a_init_C10; // Index 5 in MATLAB is 4 in C++ (0-indexed)
     waves.b(5) = a_init_C11; // Index 7 in MATLAB is 6 in C++ (0-indexed)
 
-    /*
-    
-    if (i>10000){
-        
-        computeScatteringMatrix(R, tone, volume);
-        DBG("tone " << tone);
-        i=0;
-    }
-    
-    
-    i++;
 
-     
-     */
     
     // Compute waves.a by multiplying with S_out matrix
     waves.a = S_out * waves.b;
@@ -82,7 +63,7 @@ float OutputStage::outputStageSample(float inputWet, Matrix6f S_out, wavesOUT& w
 
     float outputSample = (waves.a(1) + waves.b(1)) / 2;
     
-    return outputSample;
+    return outputSample; // Return the processed sample
 }
 
 void OutputStage::computeScatteringMatrix(bool R, int X4, int X5){
@@ -98,8 +79,8 @@ void OutputStage::computeScatteringMatrix(bool R, int X4, int X5){
     }
 
     // Common denominator for all elements
-    float denom = X4 + X5 + Z_C11 + 1000000.0f * R15 * X4 + 1000000.0f * R15 * X5 + 
-                  1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 + 1000000.0f * X4 * Z_C10 + 
+    float denom = X4 + X5 + Z_C11 + 1000000.0f * R15 * X4 + 1000000.0f * R15 * X5 +
+                  1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 + 1000000.0f * X4 * Z_C10 +
                   1000000.0f * X5 * Z_C10 + 1000000.0f * X5 * Z_C11 + 1000000.0f * Z_C10 * Z_C11;
     
     // Common terms for efficiency
@@ -128,8 +109,8 @@ void OutputStage::computeScatteringMatrix(bool R, int X4, int X5){
     // Row 2
     S_out(2, 0) = (2.0f * X5) / denom;
     S_out(2, 1) = (2.0f * term_X4_Z_C11) / denom;
-    S_out(2, 2) = (1000000.0f * R15 * X4 - X5 - Z_C11 - X4 + 1000000.0f * R15 * X5 + 
-               1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 + 1000000.0f * X4 * Z_C10 + 
+    S_out(2, 2) = (1000000.0f * R15 * X4 - X5 - Z_C11 - X4 + 1000000.0f * R15 * X5 +
+               1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 + 1000000.0f * X4 * Z_C10 +
                1000000.0f * X5 * Z_C10 + 1000000.0f * X5 * Z_C11 + 1000000.0f * Z_C10 * Z_C11) / denom;
     S_out(2, 3) = (2.0f * term_X4_X5_Z_C11) / denom;
     S_out(2, 4) = (2.0f * term_X4_X5_Z_C11) / denom;
@@ -139,8 +120,8 @@ void OutputStage::computeScatteringMatrix(bool R, int X4, int X5){
     S_out(3, 0) = -(2000000.0f * X5 * Z_C10) / denom;
     S_out(3, 1) = -(2000000.0f * Z_C10 * term_X4_Z_C11) / denom;
     S_out(3, 2) = (2000000.0f * Z_C10 * term_X4_X5_Z_C11) / denom;
-    S_out(3, 3) = (X4 + X5 + Z_C11 + 1000000.0f * R15 * X4 + 1000000.0f * R15 * X5 + 
-               1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 - 1000000.0f * X4 * Z_C10 - 
+    S_out(3, 3) = (X4 + X5 + Z_C11 + 1000000.0f * R15 * X4 + 1000000.0f * R15 * X5 +
+               1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 - 1000000.0f * X4 * Z_C10 -
                1000000.0f * X5 * Z_C10 + 1000000.0f * X5 * Z_C11 - 1000000.0f * Z_C10 * Z_C11) / denom;
     S_out(3, 4) = -(2000000.0f * Z_C10 * term_X4_X5_Z_C11) / denom;
     S_out(3, 5) = -(2000000.0f * X5 * Z_C10) / denom;
@@ -150,8 +131,8 @@ void OutputStage::computeScatteringMatrix(bool R, int X4, int X5){
     S_out(4, 1) = -(2000000.0f * R15 * term_X4_Z_C11) / denom;
     S_out(4, 2) = (2000000.0f * R15 * term_X4_X5_Z_C11) / denom;
     S_out(4, 3) = -(2000000.0f * R15 * term_X4_X5_Z_C11) / denom;
-    S_out(4, 4) = (X4 + X5 + Z_C11 - 1000000.0f * R15 * X4 - 1000000.0f * R15 * X5 - 
-               1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 + 1000000.0f * X4 * Z_C10 + 
+    S_out(4, 4) = (X4 + X5 + Z_C11 - 1000000.0f * R15 * X4 - 1000000.0f * R15 * X5 -
+               1000000.0f * R15 * Z_C11 + 1000000.0f * X4 * X5 + 1000000.0f * X4 * Z_C10 +
                1000000.0f * X5 * Z_C10 + 1000000.0f * X5 * Z_C11 + 1000000.0f * Z_C10 * Z_C11) / denom;
     S_out(4, 5) = -(2000000.0f * R15 * X5) / denom;
     

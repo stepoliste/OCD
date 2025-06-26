@@ -89,32 +89,43 @@ void DistStage::prepareDistStage(float sampleRate)
     bVect = (Vvect - Z_dist(1,1) * Ivect);
 
    
-    S_dist = I - 2 * Z_dist * Bi_dist.transpose() *
-             ((Bv_dist * Z_dist * Bi_dist.transpose()).inverse() * Bv_dist);
-    
-    /*
-    DBG("aa S_dist:");
+    S_dist = I - 2 * Z_dist * Bi_dist.transpose() *((Bv_dist * Z_dist * Bi_dist.transpose()).inverse() * Bv_dist);
 
-    for (int i = 0; i < S_dist.rows(); ++i)
-    {
-        for (int j = 0; j < S_dist.cols(); ++j)
-        {
-            DBG("S_dist(" << i << ", " << j << "): " << S_dist(i, j));
+   
+
+    // Initialize wave variables
+    a_init_C7 = 0.0f;
+    a_init_C8 = 0.0f;
+    a_init_C9 = 0.0f;
+    V_ref = 0.0f;
+    waves.a.setZero();
+    waves.b.setZero();
+
+    // Initialize nonlinear function parameters
+    mu0 = 0.0f;
+    mu1 = 0.0f;
+    etaVect = Eigen::Matrix<float, 1, 42>::Zero();
+
+    // Calculate eta values for CPWL function
+    for (int i = 0; i < 42-1; i++) {
+        if (aVect(i+1) != aVect(i)) {
+            etaVect(i) = ((bVect(i+1) - bVect(i)) / (aVect(i+1) - aVect(i)) - mu1) * 0.5f;
         }
     }
-    */
+
+
 
 
 }
 
-float DistStage::DistStageSample(const float DistSample, wavesDIST& waves)
+float DistStage::DistStageSample(const float DistSample)
 {
     // Set up b_dist (waves.b) for the distortion stage
-    waves.b(3) = a_init_C8;  // MATLAB b_dist(4)
-    waves.b(4) = a_init_C9;  // MATLAB b_dist(5)
-    waves.b(0) = V_ref;      // MATLAB b_dist(1)
-    waves.b(8) = DistSample; // MATLAB b_dist(9), V_1(n)
-    waves.b(6) = a_init_C7;  // MATLAB b_dist(7)
+    waves.b(3) = a_init_C8;
+    waves.b(4) = a_init_C9;
+    waves.b(0) = V_ref;
+    waves.b(8) = DistSample;
+    waves.b(6) = a_init_C7;
 
     // Compute wave at the NL port (a_dist(2) in MATLAB)
     waves.a(1) = S_dist.row(1) * waves.b;
@@ -125,19 +136,17 @@ float DistStage::DistStageSample(const float DistSample, wavesDIST& waves)
     std::tie(waves.b(1), idx) = CPWL_function(waves.a(1), aVect, mu0, mu1, etaVect);
 
     
-    DBG("AAAAA");
     // Compute final a_dist
-    //waves.a = S_dist * waves.b;
+    // waves.a = S_dist * waves.b;
 
-    //PROVA
-
-    // Even better - directly compute just what you need:
-    waves.a(3) = S_dist.row(3) * waves.b;  // a_init_C8
-    waves.a(4) = S_dist.row(4) * waves.b;  // a_init_C9
-    waves.a(5) = S_dist.row(5) * waves.b;  // Used for output
-    waves.a(6) = S_dist.row(6) * waves.b;  // a_init_C7
-
+    // Calculate only the output rows we need instead of full matrix multiplication
+    waves.a(3) = S_dist.row(3) * waves.b; // C8
+    waves.a(4) = S_dist.row(4) * waves.b; // C9
+    waves.a(5) = S_dist.row(5) * waves.b; // Output
+    waves.a(6) = S_dist.row(6) * waves.b; // C7
     
+ 
+
     // Save capacitor states
     a_init_C9 = waves.a(4);
     a_init_C8 = waves.a(3);
@@ -152,10 +161,10 @@ float DistStage::DistStageSample(const float DistSample, wavesDIST& waves)
 
 /*
 
-std::pair<float, int> DistStage::CPWL_function(float a, const Eigen::Matrix<float, 1, 42>& aVect, 
+std::pair<float, int> DistStage::CPWL_function(float a, const Eigen::Matrix<float, 1, 42>& aVect,
                                               float mu0, float mu1, const Eigen::Matrix<float, 1, 42>& etaVect)
 {
-    // Calculate output value - mathematically equivalent to MATLAB
+
     Eigen::Matrix<float, 1, 42> absDiff = (aVect.array() - a).cwiseAbs();
     float b = mu0 + mu1 * a + etaVect.dot(absDiff);
 
@@ -167,10 +176,10 @@ std::pair<float, int> DistStage::CPWL_function(float a, const Eigen::Matrix<floa
             index = j;
             break;
         } else if (a <= aVect(0)) {
-            index = 0;  // MATLAB uses 1 (one-indexed)
+            index = 0;
             break;
         } else if (a >= aVect(N - 1)) {
-            index = N - 1;  // FIX: Was N-2, should be N-1 to match MATLAB's length(aVect)-1
+            index = N - 1;
             break;
         }
     }
@@ -180,40 +189,41 @@ std::pair<float, int> DistStage::CPWL_function(float a, const Eigen::Matrix<floa
     
 */
 
-std::pair<float, int> DistStage::CPWL_function(float a, const Eigen::Matrix<float, 1, 42>& aVect, 
-                                             float mu0, float mu1, const Eigen::Matrix<float, 1, 42>& etaVect)
+std::pair<float, int> DistStage::CPWL_function(float a, const Eigen::Matrix<float, 1, 42>& aVect,
+                                              float mu0, float mu1, const Eigen::Matrix<float, 1, 42>& etaVect)
 {
-    // Calculate b directly without creating a temporary matrix
+    // Optimize the calculation of b
     float b = mu0 + mu1 * a;
     
-    // Manual unrolling for better performance
+    // Use simple loop to avoid creating temporary vector
     for (int i = 0; i < aVect.size(); ++i) {
         b += etaVect(i) * std::abs(aVect(i) - a);
     }
-    
-    // Binary search instead of linear search (much faster for large vectors)
-    int low = 0;
-    int high = aVect.size() - 2;
+
+    // Binary search for interval (much faster than linear search)
     int index;
-    
-    if (a <= aVect(0))
+    if (a <= aVect(0)) {
         index = 0;
-    else if (a >= aVect(aVect.size() - 1))
-        index = aVect.size() - 2;
-    else {
+    } else if (a >= aVect(aVect.size() - 1)) {
+        index = static_cast<int>(aVect.size()) - 2;
+    } else {
         // Binary search
+        int low = 0;
+        int high = static_cast<int>(aVect.size()) - 2;
+        
         while (low <= high) {
             int mid = low + (high - low) / 2;
-            if (a > std::max(aVect(mid), aVect(mid+1)))
+            
+            if (a > std::max(aVect(mid), aVect(mid + 1))) {
                 low = mid + 1;
-            else if (a < std::min(aVect(mid), aVect(mid+1)))
+            } else if (a < std::min(aVect(mid), aVect(mid + 1))) {
                 high = mid - 1;
-            else {
+            } else {
                 index = mid;
                 break;
             }
         }
     }
-    
+
     return {b, index};
 }

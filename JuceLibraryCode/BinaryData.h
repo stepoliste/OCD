@@ -12,34 +12,34 @@ namespace BinaryData
     const int            dry_wet_knob_pngSize = 671917;
 
     extern const char*   driveknob_strip_png;
-    const int            driveknob_strip_pngSize = 853766;
+    const int            driveknob_strip_pngSize = 802495;
 
     extern const char*   toneknob_strip_png;
-    const int            toneknob_strip_pngSize = 836305;
+    const int            toneknob_strip_pngSize = 787337;
 
     extern const char*   volknob_strip_png;
-    const int            volknob_strip_pngSize = 917856;
+    const int            volknob_strip_pngSize = 817048;
 
     extern const char*   HpLpswitchdown_png;
-    const int            HpLpswitchdown_pngSize = 1765;
+    const int            HpLpswitchdown_pngSize = 1792;
 
     extern const char*   HpLpswitchup_png;
-    const int            HpLpswitchup_pngSize = 1725;
+    const int            HpLpswitchup_pngSize = 1780;
 
     extern const char*   onoffledoff_png;
-    const int            onoffledoff_pngSize = 1890;
+    const int            onoffledoff_pngSize = 1819;
 
     extern const char*   onoffledon_png;
-    const int            onoffledon_pngSize = 1921;
+    const int            onoffledon_pngSize = 1814;
 
     extern const char*   onoffswitchdown_png;
-    const int            onoffswitchdown_pngSize = 9097;
+    const int            onoffswitchdown_pngSize = 5957;
 
     extern const char*   pedal_full_res_2k_cropped_scaled_png;
-    const int            pedal_full_res_2k_cropped_scaled_pngSize = 41642;
+    const int            pedal_full_res_2k_cropped_scaled_pngSize = 197699;
 
     extern const char*   onoffswitchup_png;
-    const int            onoffswitchup_pngSize = 9094;
+    const int            onoffswitchup_pngSize = 5856;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 11;
