@@ -210,7 +210,7 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
                     //outputL = outputStage.outputStageSample( inputStageOutput, HpLpState,tone,volume);
                     //outputL= inputStageOutput;
-                    
+                    //outputL=distStageOutput;
                 }
                 
                 
@@ -233,6 +233,8 @@ void ProvaMXRAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                     //outputR = outputStage.outputStageSample( inputStageOutput,HpLpState,tone,volume);
                     
                     //DBG("outputsample = " << outputR);
+                   // outputR=distStageOutput;
+                    
                 }
                 wetSampleL = outputL * wet;
                 wetSampleR = outputR * wet;

@@ -40,8 +40,18 @@ private:
         }
     };
 
+    // Add this struct to your class
+    struct S_cache {
+        // Only coefficients needed for the sample calculations
+        float S12, S13, S15;  // Row 1 - output
+        float S32, S33, S35;  // Row 3 - C10 state
+        float S52, S53, S55;  // Row 5 - C11 state
+    } ;
+    
+
     wavesOUT waves;
 
+    S_cache S_cache;
     float Ts;
     float Z_C10;
     float Z_C11;

@@ -40,6 +40,17 @@ private:
             b.setZero();
         }
     };
+
+    // Add these member variables
+    struct S_cache{
+        float S10, S13, S14, S16, S18;  // Row 1 coefficients
+        float S30, S31, S33, S36, S38;  // Row 3 coefficients 
+        float S40, S41, S43, S44, S46, S48;  // Row 4 coefficients
+        float S50, S51, S53, S54, S56, S58;  // Row 5 coefficients
+        float S60, S61, S62, S66, S68;  // Row 6 coefficients
+    } ;
+
+    S_cache S_cache;
     wavesDist waves;
     float R9 = 10e3;
     float R10 = 10e3;
@@ -63,33 +74,34 @@ private:
     float a_init_C9 = 0.0f;
     float V_ref = 4.5f;
     
-    // CPWL helper functions
-    // For 1xN static row vectors:
-    std::pair<float, int> CPWL_function(float a, const Eigen::Matrix<float, 1, 42>& aVect,
-                                   float mu0, float mu1, const Eigen::Matrix<float, 1, 42>& etaVect);
+
+    void computeScatteringMatrix(float Z_C7,float Z_C8,float Z_C9);
+
+    float CPWL_function(float a);
 
     //Eigen::VectorXf Vvect, Ivect, Vvect_d, Ivect_d;
     //Eigen::VectorXf Z_mos, Z_d;
-    Eigen::Matrix<float, 1, 42> Vvect;
-    Eigen::Matrix<float, 1, 42> Ivect;
+    //Eigen::Matrix<float, 1, 42> Vvect;
+    //Eigen::Matrix<float, 1, 42> Ivect;
     Eigen::Matrix<float, 1, 42> aVect;
-    Eigen::Matrix<float, 1, 42> bVect;
-    Eigen::Matrix<float, 41, 1> Z_mos;
+    //Eigen::Matrix<float, 1, 42> bVect;
+    //Eigen::Matrix<float, 41, 1> Z_mos;
     Eigen::Matrix<float, 1, 42> etaVect;
 
-    Matrix<float, 11, 11> Z_dist;
+    //Matrix<float, 11, 11> Z_dist;
 
 
     Matrix<float, 11, 11> S_dist;
     Matrix<float, 11, 11> I;
 
-    Eigen::Matrix<float, 6, 5> Fv;
-    Eigen::Matrix<float, 6, 5> Fi;
-    Eigen::Matrix<float, 6, 11> Bv_dist;
+    Eigen::Matrix<float, 1, 42> absDiff;
+    //Eigen::Matrix<float, 6, 5> Fv;
+    //Eigen::Matrix<float, 6, 5> Fi;
+    //Eigen::Matrix<float, 6, 11> Bv_dist;
 
-    Eigen::Matrix<float, 6, 11> Bi_dist;
-
-    
+    //Eigen::Matrix<float, 6, 11> Bi_dist;
+    int N=42;
+    int idx=0;
     float mu0=-0.984741527402546f;
     float mu1=-0.995080545246249f;
 

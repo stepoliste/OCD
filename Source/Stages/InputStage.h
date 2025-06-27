@@ -35,6 +35,22 @@ private:
     };
     wavesIN waves;
 
+    // In InputStage.h
+    struct S_Cache {
+        // Row 3 - C4 state
+        float S30, S31, S33, S35, S36, S37, S38;
+        
+        // Row 4 - Output
+        float S40, S41, S42, S43, S45, S46, S47, S48, S49, S410;
+        
+        // Row 5 - C1 state
+        float S50, S51, S55, S56, S57;
+        
+        // Row 9 - C6 state
+        float S90, S91, S92, S93, S95, S96, S97, S98, S99, S910;
+    };
+    S_Cache S_cache;
+
     float Rin = 1e-6;
     float R2 = 1e6;
     float R3 = 10e3;
