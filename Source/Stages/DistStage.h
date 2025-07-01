@@ -79,27 +79,16 @@ private:
 
     float CPWL_function(float a);
 
-    //Eigen::VectorXf Vvect, Ivect, Vvect_d, Ivect_d;
-    //Eigen::VectorXf Z_mos, Z_d;
-    //Eigen::Matrix<float, 1, 42> Vvect;
-    //Eigen::Matrix<float, 1, 42> Ivect;
+    
     Eigen::Matrix<float, 1, 42> aVect;
-    //Eigen::Matrix<float, 1, 42> bVect;
-    //Eigen::Matrix<float, 41, 1> Z_mos;
+    
     Eigen::Matrix<float, 1, 42> etaVect;
-
-    //Matrix<float, 11, 11> Z_dist;
-
 
     Matrix<float, 11, 11> S_dist;
     Matrix<float, 11, 11> I;
 
     Eigen::Matrix<float, 1, 42> absDiff;
-    //Eigen::Matrix<float, 6, 5> Fv;
-    //Eigen::Matrix<float, 6, 5> Fi;
-    //Eigen::Matrix<float, 6, 11> Bv_dist;
-
-    //Eigen::Matrix<float, 6, 11> Bi_dist;
+    
     int N=42;
     int idx=0;
     float mu0=-0.984741527402546f;
