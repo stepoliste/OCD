@@ -29,40 +29,7 @@ void InputStage::prepareInputStage(float sampleRate)
     lastDrive = -1;
 }
 
-/*
-float InputStage::inputStageSample(const float inputSample, float drive)
-{
-    // Convert drive to int as required by computeScatteringMatrix
-    int driveInt = static_cast<int>(drive);
-    
-    // Check if drive parameter has changed, and only recompute if necessary
-    if (driveInt != lastDrive)
-    {
-        computeScatteringMatrix(driveInt);
-        
-        // Update last drive value
-        lastDrive = driveInt;
-    }
-    
-    // Input stage
-    waves.b(0) = inputSample;           // Vin(n) --> waves.b(0)
-    waves.b(3) = a_init_C4;
-    waves.b(5) = a_init_C1;
-    waves.b(7) = V_ref;
-    waves.b(9) = a_init_C6;
 
-    
-    waves.a = S_in * waves.b;
-
-    a_init_C1 = waves.a(5);
-    a_init_C4 = waves.a(3);
-    a_init_C6 = waves.a(9);
-
-    
-    float outputSample = (waves.a(4) + waves.b(4)) / 2;
-    return outputSample;
-}
-*/
 float InputStage::inputStageSample(const float inputSample, float drive)
 {
     // Convert drive to int as required by computeScatteringMatrix

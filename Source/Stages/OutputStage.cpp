@@ -38,38 +38,6 @@ void OutputStage::prepareOutputStage(float sampleRate)
 
 }
 
-/*
-float OutputStage::outputStageSample(float inputWet, int R, float tone, float volume)
-{
-    // Check if any parameter has changed, and only recompute if necessary
-    if (R != lastR || tone != lastTone || volume != lastVolume)
-    {
-        computeScatteringMatrix(R, tone, volume);
-        
-        // Update last parameter values
-        lastR = R;
-        lastTone = tone;
-        lastVolume = volume;
-    }
-    
-    waves.b(2) = inputWet;      // Index 4 in MATLAB is 3 in C++ (0-indexed)
-    waves.b(3) = a_init_C10; // Index 5 in MATLAB is 4 in C++ (0-indexed)
-    waves.b(5) = a_init_C11; // Index 7 in MATLAB is 6 in C++ (0-indexed)
-
-
-    
-    // Compute waves.a by multiplying with S_out matrix
-    waves.a = S_out * waves.b;
-
-    // Update values for a_init_C10 and a_init_C11 based on waves.a
-    a_init_C10 = waves.a(3);  // Index 5 in MATLAB is 4 in C++ (0-indexed)
-    a_init_C11 = waves.a(5);  // Index 7 in MATLAB is 6 in C++ (0-indexed)
-
-    float outputSample = (waves.a(1) + waves.b(1)) / 2;
-    
-    return outputSample; // Return the processed sample
-}
-*/
 
 float OutputStage::outputStageSample(float inputWet, int R, float tone, float volume)
 {

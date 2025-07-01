@@ -297,7 +297,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProvaMXRAudioProcessor::crea
 
     // tone Parameter
     juce::NormalisableRange<float> toneRange(1.0f, 10000.f);
-    toneRange.interval = 1.0f;
+    toneRange.interval = 10.0f;
     params.push_back(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID { "tone", 1 }, // ID and version
         "tone",                          // Label
@@ -307,8 +307,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProvaMXRAudioProcessor::crea
     ));
     
     // drive Parameter
-    juce::NormalisableRange<float> driveRange(1000.0f, 500000.0f);
-    driveRange.interval = 10.0f;
+    juce::NormalisableRange<float> driveRange(1.0f, 500000.0f);
+    driveRange.interval = 100.0f;
     params.push_back(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID { "drive", 1 },  // Parameter ID
         "Drive",                           // Display name
@@ -322,13 +322,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProvaMXRAudioProcessor::crea
     
     // volume Parameter
     juce::NormalisableRange<float> volumeRange(1.0f, 500000.0f);
-    volumeRange.interval = 1.0f;
+    volumeRange.setSkewForCentre(100.0f); // This makes the range logarithmic with 1000.0 at the center
     params.push_back(std::make_unique<juce::AudioParameterFloat>(
         juce::ParameterID { "volume", 1 }, // ID and version
         "volume",                          // Label
         volumeRange,
         1000.0f,
-        "dB"
+        "ohm"
     ));
 
 
