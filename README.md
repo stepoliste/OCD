@@ -6,9 +6,26 @@ This branch contains the implementation of a real-time VST plugin that integrate
 
 The plugin emulates the nonlinear behavior of the reference analog circuit using the precomputed WD structure. It supports real-time audio input/output and parameter control.
 
-> ⚠️ The plugin is still under refinement. Performance tuning and testing on different DAWs are ongoing.
 
-## GUI Preview
+### 🔊 Sound Characteristics
+
+- **Amp-style dynamics** – Touch-sensitive gain, reacts like a tube amp  
+- **Wide gain range** – From edge-of-breakup to full-stack crunch  
+- **Open, uncompressed tone** – Preserves transients and clarity  
+- **Transparent or aggressive** – Switchable voicing via LP/HP modes
+
+
+### 🎚️ Controls
+
+- `Drive` – Adjusts overdrive intensity  
+- `Tone` – Shapes highs without getting harsh  
+- `Volume` – Controls output level  
+- `LP / HP Switch`  
+  - **LP (Low Peak):** Smooth, flatter EQ for rhythm or stacking  
+  - **HP (High Peak):** Focused mids, tighter lows for leads
+
+
+### GUI Preview
 
 ![GUI Preview](https://github.com/stepoliste/OCD/blob/JUCE/gui_screen.png)
 
@@ -61,16 +78,3 @@ OCD/builds/OCD.vst3
 - Adjust the parameters to shape your sound.
 
 ---
-
-## 🎚️ Controls
-
-- **Drive** – Sets the amount of distortion/saturation applied to the signal.
-- **Tone** – Adjusts brightness via a high-frequency filter.
-- **Level** – Controls the output gain after distortion.
-
----
-
-> ⚠️ **Note:**  
-> This version of the plugin is functional but not optimized.  
-> While the audio processing code is correct, it is currently inefficient and results in high CPU usage, which may prevent real-time operation in some environments.  
-> Future updates will focus on improving performance for smoother live use.
