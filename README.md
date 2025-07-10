@@ -70,11 +70,10 @@ OCD/builds/OCD.vst3
 
 - Restart your DAW to detect the new plugin.
 
----
+
 
 4. Insert the Plugin in Your DAW
 
 - Load **"OCD"** onto an audio track or effects bus.
 - Adjust the parameters to shape your sound.
 
----
