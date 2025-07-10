@@ -43,12 +43,12 @@ The plugin emulates the nonlinear behavior of the reference analog circuit using
    ```bash
    git clone --branch JUCE https://github.com/stepoliste/OCD.git
    
-2. Locate the Built Plugin
+2. **Locate the Built Plugin**
 
 After building the plugin using JUCE's Projucer or an IDE like Xcode or Visual Studio, you will find the compiled plugin file here:
 OCD/builds/OCD.vst3
 
-3. Install the Plugin Manually
+3. **Install the Plugin Manually**
 
 #### On Windows
 
@@ -72,7 +72,7 @@ OCD/builds/OCD.vst3
 
 
 
-4. Insert the Plugin in Your DAW
+4. **Insert the Plugin in Your DAW**
 
 - Load **"OCD"** onto an audio track or effects bus.
 - Adjust the parameters to shape your sound.
