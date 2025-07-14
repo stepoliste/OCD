@@ -24,4 +24,4 @@ The output waveforms match closely with the reference, demonstrating the correct
 
 ## Notes
 
-Please refer to the `paper.pdf` for a complete explanation of the mathematical background and modeling strategies.
+Please refer to the `L15_Report.pdf` for a complete explanation of the mathematical background and modeling strategies.
